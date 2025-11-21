@@ -45,3 +45,26 @@ SELECT * FROM v_storefront_summary LIMIT 10;
     NULL,
     0
 );
+
+-- Task 7 - VIEW 2 (Updatable)
+
+CREATE VIEW v_customer_basic AS
+SELECT 
+    Email,
+    Order_Count,
+    Favourite_Cuisine,
+    Location
+FROM Customer;
+
+-- Query View 2
+
+SELECT * FROM v_customer_basic LIMIT 10;
+
+
+-- Update attempt on View 2
+-- (Works even if it affects 0 rows)
+
+
+UPDATE v_customer_basic
+SET Location = 'Updated Location'
+WHERE Email = 'fake@example.com';
