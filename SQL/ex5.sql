@@ -16,7 +16,7 @@ FROM Orders o
 JOIN Customer c ON o.Email = c.Email
 JOIN Users u    ON c.Email = u.Email
 JOIN Storefront s ON o.Storefront_ID = s.Storefront_ID
-WHERE o.Status = 'PENDING';
+WHERE o.Status = 'in Progress';
 
 
 -- Total number of orders per storefront.

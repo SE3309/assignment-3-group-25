@@ -1,6 +1,3 @@
-USE comforteats;
-
--- View 1: Storefront Summary
 
 CREATE VIEW v_storefront_summary AS
 SELECT 
@@ -26,7 +23,6 @@ GROUP BY
     -- Query View 1
 SELECT * FROM v_storefront_summary LIMIT 10;
 
-    -- Attempt to modify View 1 (should FAIL)
 
     INSERT INTO v_storefront_summary (
     Storefront_ID,
@@ -46,7 +42,7 @@ SELECT * FROM v_storefront_summary LIMIT 10;
     0
 );
 
--- Task 7 - VIEW 2 (Updatable)
+
 
 CREATE VIEW v_customer_basic AS
 SELECT 
@@ -56,15 +52,14 @@ SELECT
     Location
 FROM Customer;
 
--- Query View 2
+
 
 SELECT * FROM v_customer_basic LIMIT 10;
 
 
--- Update attempt on View 2
--- (Works even if it affects 0 rows)
+
 
 
 UPDATE v_customer_basic
 SET Location = 'Updated Location'
-WHERE Email = 'fake@example.com';
+WHERE Email = 'aahrenje@go.com';

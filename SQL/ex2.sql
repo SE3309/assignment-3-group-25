@@ -4,6 +4,7 @@ CREATE TABLE Users (
     First_Name VARCHAR(100) NOT NULL,
     Last_Name VARCHAR(100) NOT NULL
 );
+DESCRIBE Users;
 
 CREATE TABLE Chef (
     Email VARCHAR(255) PRIMARY KEY,
@@ -11,6 +12,7 @@ CREATE TABLE Chef (
     Specialty VARCHAR(100),
     FOREIGN KEY (Email) REFERENCES Users(Email)
 );
+DESCRIBE Chef;
 
 CREATE TABLE Customer (
     Email VARCHAR(255) PRIMARY KEY,
@@ -19,35 +21,39 @@ CREATE TABLE Customer (
     Location VARCHAR(255),
     FOREIGN KEY (Email) REFERENCES Users(Email)
 );
+DESCRIBE Customer;
 
 CREATE TABLE Storefront (
     Storefront_ID INT PRIMARY KEY,
     Email VARCHAR(255),
     Restaurant_Name VARCHAR(255),
     Status VARCHAR(50),
-    OrderMilestones TEXT,
+    OrderMilestones VARCHAR(50),
     Location VARCHAR(255),
     UNIQUE (Email),
     FOREIGN KEY (Email) REFERENCES Chef(Email)
 );
+DESCRIBE Storefront;
 
 CREATE TABLE Available_Pickup_Time (
     Storefront_ID INT,
-    TimeSlot DATETIME,
-    Status VARCHAR(50),
-    PRIMARY KEY (Storefront_ID, TimeSlot),
+    PickupTime DATETIME,
+    Status BOOLEAN,
+    PRIMARY KEY (Storefront_ID, PickupTime),
     FOREIGN KEY (Storefront_ID) REFERENCES Storefront(Storefront_ID)
 );
+DESCRIBE Available_Pickup_Time;
 
 CREATE TABLE Item (
     Item_ID INT PRIMARY KEY,
     ItemName VARCHAR(255),
     Price DECIMAL(10,2),
-    Ingredients TEXT,
+    Ingredients VARCHAR(50),
     Storefront_ID INT,
     UNIQUE (Storefront_ID, ItemName),
     FOREIGN KEY (Storefront_ID) REFERENCES Storefront(Storefront_ID)
 );
+DESCRIBE Item;
 
 CREATE TABLE Orders (
     Order_ID INT PRIMARY KEY,
@@ -57,8 +63,11 @@ CREATE TABLE Orders (
     Email VARCHAR(255),
     Storefront_ID INT,
     FOREIGN KEY (Email) REFERENCES Customer(Email),
-    FOREIGN KEY (Storefront_ID) REFERENCES Storefront(Storefront_ID)
+    FOREIGN KEY (Storefront_ID) REFERENCES Storefront(Storefront_ID),
+    FOREIGN KEY (Storefront_ID, pickupTime)
+        REFERENCES Available_Pickup_Time (Storefront_ID, PickupTime)
 );
+DESCRIBE Orders;
 
 CREATE TABLE Order_Item (
     Order_ID INT,
@@ -68,6 +77,7 @@ CREATE TABLE Order_Item (
     FOREIGN KEY (Order_ID) REFERENCES Orders(Order_ID),
     FOREIGN KEY (Item_ID) REFERENCES Item(Item_ID)
 );
+DESCRIBE Order_Item;
 
 CREATE TABLE Review (
     Review_ID INT PRIMARY KEY,
@@ -78,6 +88,7 @@ CREATE TABLE Review (
     FOREIGN KEY (Email) REFERENCES Customer(Email),
     FOREIGN KEY (Storefront_ID) REFERENCES Storefront(Storefront_ID)
 );
+DESCRIBE Review;
 
 CREATE TABLE Customer_Allergy (
     Email VARCHAR(255),
@@ -85,15 +96,4 @@ CREATE TABLE Customer_Allergy (
     PRIMARY KEY (Email, Allergy),
     FOREIGN KEY (Email) REFERENCES Customer(Email)
 );
-
--- DESCRIBE COMMANDS (run for screenshots)
-DESCRIBE Users;
-DESCRIBE Chef;
-DESCRIBE Customer;
-DESCRIBE Storefront;
-DESCRIBE Available_Pickup_Time;
-DESCRIBE Item;
-DESCRIBE Orders;
-DESCRIBE Order_Item;
-DESCRIBE Review;
 DESCRIBE Customer_Allergy;
