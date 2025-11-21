@@ -1,5 +1,7 @@
 USE comforteats;
 
+-- View 1: Storefront Summary
+
 CREATE VIEW v_storefront_summary AS
 SELECT 
     s.Storefront_ID,
@@ -20,3 +22,26 @@ GROUP BY
     u.First_Name,
     u.Last_Name,
     s.Location;
+
+    -- Query View 1
+SELECT * FROM v_storefront_summary LIMIT 10;
+
+    -- Attempt to modify View 1 (should FAIL)
+
+    INSERT INTO v_storefront_summary (
+    Storefront_ID,
+    Restaurant_Name,
+    First_Name,
+    Last_Name,
+    Location,
+    avg_score,
+    num_items
+) VALUES (
+    999,
+    'Test Restaurant',
+    'Test',
+    'Chef',
+    'Test City',
+    NULL,
+    0
+);
